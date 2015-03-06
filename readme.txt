@@ -1,10 +1,10 @@
 === WooCommerce for GMO Epsilon Credit Card===
-Contributors: shohei.tanaka
-Donate link: http://wordpress.tanakashohei.com/
+Contributors: artisan-workshop-1, shohei.tanaka
+Donate link: http://wc.artws.info/
 Tags: credit cards, woocommerce, ecommerce, e-commerce, payment, payment Gateway, japan, epsilon
 Requires at least: 3.8
-Tested up to: 3.9
-Stable tag: 0.9.0
+Tested up to: 4.1.1
+Stable tag: 1.0.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -15,7 +15,7 @@ GMO Epsilon Credit Card Payment Gateway plugin provides all popular online payme
 = In Japanese: =
 
 このプラグインはWooCommerceでGMO イプシロンクレジット決済を使う為に必要なプラグインです。
-3Dセキュアにはまだ対応しておりません。2014年8月に対応予定です。
+3Dセキュアにはまだ対応しておりません。2015年4月に対応予定です。
 
 このプラグインはWooCommerceの日本語レビュアーによって作成されています。
 
@@ -64,12 +64,14 @@ The manual installation method involves downloading our plugin and uploading it 
 = In Japanese: =
 
 質問： 日本語向けのフォーラムとか無いんですか？<br />
-答え： 現在、準備中です。今しばらくお待ちください。
+答え： こちらのフォーラムで対応しております。<br />
+http://support.artws.info/forums/forum/gmo-epsilon-payment/
 
 = In English: =
 
 Q: Do you have the forum of this plugin in Japanese?<br />
-A: Is preparing.
+A: please use following site.<br />
+http://support.artws.info/forums/forum/gmo-epsilon-payment/
 
 == Screenshots ==
 
@@ -77,6 +79,8 @@ A: Is preparing.
 2. Credit Input Form
 
 == Changelog ==
+= 1.0.0 =
+bug fixed and up major version.
 = 0.9.0 =
 make beta version
 
