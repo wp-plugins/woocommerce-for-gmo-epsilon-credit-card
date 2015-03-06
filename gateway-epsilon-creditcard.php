@@ -348,7 +348,25 @@ function woocommerce_gmo_epsilon_creditcard_init() {
         );
 
       } else if ( $response['result'] == 3 ) {//3DS
+		$term_url = $this->get_return_url( $order );
+		session_start();
+		$_SESSION['acsurl'] = urldecode($response['acsurl']);
+		$_SESSION['PaReq'] = urldecode($response['pareq']);
+		$_SESSION['TermUrl'] = urldecode($term_url);
+		$_SESSION['MD'] = $order->id;
+			// Mark as on-hold (we're awaiting the payment)
+			$order->update_status( 'on-hold', __( '3DSecure Payment Processing.', 'woocommerce-4jp' ) );
 
+			// Reduce stock levels
+			$order->reduce_order_stock();
+
+			// Remove cart
+			WC()->cart->empty_cart();
+			return array(
+				'result' 	=> 'success',
+				'redirect'	=> plugins_url('/woocommerce-for-gmo-epsilon-credit-card/3ds.php')
+			);
+			
       } else if ( $response['result'] == 9 ) {//System Error
         // Other transaction error
         $order->add_order_note( __( 'Epsilon Payment failed. Sysmte Error: ', 'wc-epsilon' ) . $response['err_code'] .':'. $response['err_detail'] .':'.$response['trans_code']);
