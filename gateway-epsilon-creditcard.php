@@ -4,7 +4,7 @@
  * Plugin Name: WooCommerce Payment Gateway Credit Card- GMO Epsilon
  * Plugin URI: http://www.wp-pay.com/
  * Description: Accept major credit cards directly on your WooCommerce site in a seamless and secure checkout environment with GMO Epsilon Commerce.
- * Version: 0.9.0
+ * Version: 1.0.0
  * Author: shohei.tanaka
  * Author URI: http://wc.artws.info/
  * License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-3.0.html
@@ -352,11 +352,11 @@ function woocommerce_gmo_epsilon_creditcard_init() {
       } else if ( $response['result'] == 9 ) {//System Error
         // Other transaction error
         $order->add_order_note( __( 'Epsilon Payment failed. Sysmte Error: ', 'wc-epsilon' ) . $response['err_code'] .':'. $response['err_detail'] .':'.$response['trans_code']);
-        $woocommerce->add_error( __( 'Sorry, there was an error: ', 'wc-epsilon' ) . $response['err_code'] );
+        wc_add_notice( __( 'Sorry, there was an error: ', 'wc-epsilon' ) . $response['err_code'], $notice_type = 'error' );
       } else {
         // No response or unexpected response
         $order->add_order_note( __( "Epsilon Payment failed. Some trouble happened.", 'wc-epsilon' ). $response['err_code'] .':'. $response['err_detail'].':'.$response['trans_code'] );
-        $woocommerce->add_error( __( 'No response from payment gateway server. Try again later or contact the site administrator.', 'wc-epsilon' ). $response['err_code'] );
+        wc_add_notice( __( 'No response from payment gateway server. Try again later or contact the site administrator.', 'wc-epsilon' ). $response['err_code'], $notice_type = 'error' );
 
       }
 
@@ -474,7 +474,7 @@ function woocommerce_gmo_epsilon_creditcard_init() {
 
 			// Check for saving payment info without having or creating an account
 			if ( $this->get_post( 'saveinfo' )  && ! is_user_logged_in() && ! $this->get_post( 'createaccount' ) ) {
-        $woocommerce->add_error( __( 'Sorry, you need to create an account in order for us to save your payment information.', 'wc-epsilon') );
+        wc_add_notice( __( 'Sorry, you need to create an account in order for us to save your payment information.', 'wc-epsilon'), $notice_type = 'error' );
         return false;
       }
 
@@ -485,18 +485,18 @@ function woocommerce_gmo_epsilon_creditcard_init() {
 
 			// Check card number
 			if ( empty( $cardNumber ) || ! ctype_digit( $cardNumber ) ) {
-				$woocommerce->add_error( __( 'Card number is invalid.', 'wc-epsilon' ) );
+				wc_add_notice( __( 'Card number is invalid.', 'wc-epsilon' ), $notice_type = 'error' );
 				return false;
 			}
 
 			if ( $this->security_check == 'yes' ){
 				// Check security code
 				if ( ! ctype_digit( $cardCSC ) ) {
-					$woocommerce->add_error( __( 'Card security code is invalid (only digits are allowed).', 'wc-epsilon' ) );
+					wc_add_notice( __( 'Card security code is invalid (only digits are allowed).', 'wc-epsilon' ) , $notice_type = 'error');
 					return false;
 				}
 				if ( ( strlen( $cardCSC ) >4 ) ) {
-					$woocommerce->add_error( __( 'Card security code is invalid (wrong length).', 'wc-epsilon' ) );
+					wc_add_notice( __( 'Card security code is invalid (wrong length).', 'wc-epsilon' ), $notice_type = 'error' );
 					return false;
 				}
 			}
@@ -510,7 +510,7 @@ function woocommerce_gmo_epsilon_creditcard_init() {
 				 $cardExpirationYear < $currentYear ||
 				 $cardExpirationYear > $currentYear + 20
 			) {
-				$woocommerce->add_error( __( 'Card expiration date is invalid', 'wc-epsilon' ) );
+				wc_add_notice(__( 'Card expiration date is invalid', 'wc-epsilon' ), $notice_type = 'error' );
 				return false;
 			}
 
